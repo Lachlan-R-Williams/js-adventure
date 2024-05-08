@@ -7,7 +7,7 @@ var images = document.getElementById("images")
 var buttonBox = document.getElementById('buttonBox');
 var input = document.getElementById('input');
 
-//this is the variable for the name of the character
+//This is the variable for the name of the character
 var player;
 
 //Varible for Random Weather States
