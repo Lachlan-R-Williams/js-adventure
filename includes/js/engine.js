@@ -31,7 +31,7 @@ var v12HourClock;
 //Holds the weather data.
 var weatherdata;
 
-// This varible holds the Open Weather Map API Key have it has been retrieved.
+// This varible holds the Open Weather Map API Key if it has been retrieved.
 var appid;
 
 function fetchData(callback) {
