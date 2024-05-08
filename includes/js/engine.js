@@ -22,7 +22,7 @@ var randomweather;
 //Holds the local weather condition.
 var setweather;
 
-//Holds the alternative word fir the local weather condition.
+//Gameweather holds the data for the in-game weather.
 var gameweather;
 
 //Holds the time from the twelve hour clock function.
@@ -31,7 +31,7 @@ var v12HourClock;
 //Holds the weather data.
 var weatherdata;
 
-// This varible holds the Open Weather Map API Key if it has been retrieved.
+// This variable holds the Open Weather Map API Key if it has been retrieved.
 var appid;
 
 function fetchData(callback) {
