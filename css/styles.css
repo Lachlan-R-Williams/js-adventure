@@ -1,0 +1,123 @@
+/* The css for html elements not cover by Bootstrap */
+
+/* A */
+/* Style the active link (or home/logo) */
+.active {background-color: #333333; color: white;}
+
+/* Author Text in the Footer */
+.author {margin-top: 0; margin-bottom: 1rem; font-weight: normal; font-size: 16px; text-indent: 15px;}
+
+/* B */
+.bg-Dark-Gunmetal {background-color: #212529 !important;}
+
+/* Formating for the html body */
+body {color: white; background-color: #212529; font-size: 1.6em; margin-left: 30%; margin-right:30%;}
+
+/* Buttons */
+#buttonBox {text-align:center;}
+
+button{margin-bottom: 15px; margin-left: 10px; margin-top: 15px; height: 22px; font-size: 21px !important;}
+
+/* D */
+/* List Items */
+dd {margin-top: 0; margin-bottom: 1rem; font-weight: normal; font-size: 15px;}
+
+/* Lists Description */
+dl {margin-top: 0; margin-bottom: 1rem; font-weight: bold; font-size: 15px;}
+
+/* G */
+/* Size and layout for images */
+.gamescreen {height: auto; max-width: 730px; width: 100%;}
+
+/* H */
+/* Heading 1 */
+.h1 {margin-top: 0; margin-bottom: .5rem; font-weight: bold; line-height: 1.2; color: var(#ffffff);}
+
+/* Heading 2 */
+.h2 {margin-top: 0; margin-bottom: .5rem; font-weight: bold; font-size: 30px; line-height: 1.2; color: var(#ffffff);}
+
+/* Heading 3 */
+.h3 {margin-top: 0; margin-bottom: .5rem; font-weight: bold; font-size: 20px; line-height: 1.2; color: var(#ffffff);}
+
+/* Heading 4 to 6 */
+.h4, .h5, .h6, h4, h5, h6 {margin-top: 0; margin-bottom: .5rem; font-weight: bold; font-size: 20px; line-height: 1.2; color: var(#ffffff);}
+
+/* I */
+/* The input feild for entering the player name. */
+input {font-size: 23px; height: 40px; margin-top:15px; text-align:center; width: 100%;}
+
+/* M */
+/* Max Widths */
+/*-------------------------------------------------------------------*/
+.max-width-360px {flex-basis: 100% !important; max-width: 360px !important;}
+
+.max-width-450px {flex-basis: 100% !important; max-width: 450px !important;}
+
+.max-width-500px {flex-basis: 100% !important; max-width: 500px !important;}
+
+.max-width-730px {flex-basis: 100% !important; max-width: 730px !important;}
+
+.max-width-900px {flex-basis: 100% !important; max-width: 900px !important;}
+
+.max-width-936px {flex-basis: 100% !important; max-width: 936px !important;}
+
+.max-width-1080px {flex-basis: 100% !important; max-width: 1080px !important;}
+
+.max-width-1140px {flex-basis: 100% !important; max-width: 1140px !important;}
+
+.max-width-1200px {flex-basis: 100% !important; max-width: 1200px !important;}
+
+.max-width-1272px {flex-basis: 100% !important; max-width: 1272px !important;}
+
+.max-width-1296px {flex-basis: 100% !important; max-width: 1296px !important;}
+
+.max-width-1320px {flex-basis: 100% !important; max-width: 1320px !important;} 
+
+.max-width-1440px {flex-basis: 100% !important; max-width: 1440px !important;}
+
+.max-width-1700px {flex-basis: 100% !important; max-width: 1700px !important;}
+
+.max-width-1710px {flex-basis: 100% !important; max-width: 1710px !important;}
+
+.max-width-1720px {flex-basis: 100% !important; max-width: 1720px !important;}
+
+.max-width-1726px {flex-basis: 100% !important; max-width: 1726px !important;}
+
+.max-width-1730px {flex-basis: 100% !important; max-width: 1730px !important;}
+
+.max-width-1750px {flex-basis: 100% !important; max-width: 1750px !important;}
+
+.max-width-1800px {flex-basis: 100% !important; max-width: 1800px !important;}
+
+.max-width-1900px {flex-basis: 100% !important; max-width: 1900px !important;}
+
+.max-width-1920px {flex-basis: 100% !important; max-width: 1920px !important;}
+
+.max-width-variable {flex-basis: 100%; max-width: 1680px;}
+/*-------------------------------------------------------------------*/
+
+/* P */
+/* Paragraph Formating */
+p {font-size: 21px; font-weight: normal; line-height: 32px; margin-bottom: 1rem; margin-top: 1rem; text-align: center;}
+
+/* T */
+.text-align-centre {text-align: center !important;}
+
+.text-align-left {text-align: left !important;}
+
+.text-align-right {text-align: right !important;}
+
+/* Style the navigation menu */
+.topnav {overflow: hidden; background-color: #333; position: relative;}
+
+/* Hide the links inside the navigation menu (except for logo/home) */
+.topnav #myLinks {display: none;}
+
+/* Style navigation menu links */
+.topnav a {color: white; padding: 14px 16px; text-decoration: none; font-size: 17px; display: block;}
+
+/* Style the hamburger menu */
+.topnav a.icon {background: black; display: block; position: absolute; right: 0; top: 0;}
+
+/* Add a grey background color on mouse-over */
+.topnav a:hover {background-color: #ddd; color: black;}
