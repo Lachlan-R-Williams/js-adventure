@@ -1,83 +1,38 @@
-//The is the game engine
+//The is the game engine.
 //Please Note: You will need an API key from OpenWeather, https://openweathermap.org/api, for JS Adventure to work correctly.
 
 //--- Gloabal Varibles ---
 //These variables connect our code with the 'id' on the html page.
-var images = document.getElementById("images")
-var buttonBox = document.getElementById('buttonBox');
-var input = document.getElementById('input');
+let images = document.getElementById("images")
+let buttonBox = document.getElementById('buttonBox');
+let input = document.getElementById('input');
 
-//This is the variable for the name of the character
-var player;
+// This variable contains the scenario data.
+let scenario;
 
-//Varible for Random Weather States
-var randomweatherstates
+//This is the variable for the name of the character.
+let player;
 
-//Holds a Random Varible
-var random
+//Varible for Random Weather States.
+let randomweatherstates;
 
-//Varible for the random weather state
-var randomweather;
+//Holds a Random Varible.
+let random;
+
+//Varible for the random weather state.
+let randomweather;
 
 //Holds the local weather condition.
-var setweather;
+let setweather;
 
-//Gameweather holds the data for the in-game weather.
-var gameweather;
+//Holds the alternative word fir the local weather condition.
+let gameweather;
 
 //Holds the time from the twelve hour clock function.
-var v12HourClock;
+let v12HourClock;
 
 //Holds the weather data.
-var weatherdata;
-
-// This variable holds the Open Weather Map API Key if it has been retrieved.
-var appid;
-
-function fetchData(callback) {
-  var xhr = new XMLHttpRequest();
-  //The location of the publicly available PHP file that calls a PHP containing the API key in a folder outside the websites public folder.
-  xhr.open('GET', 'https://js-adventure.stagingurl.dev/includes/php/api-include.inc.php', true);
-  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-              var responseData = JSON.parse(xhr.responseText);
-              callback(responseData); // Call the callback function with responseData.
-          } else {
-              console.error('AJAX request failed');
-          }
-      }
-  };
-
-  xhr.send();
-}
-
-// Fetch the API key and add it to the varbile 'appid'
-fetchData(function(calledData) {
-  // You cannot use 'calledData' directly outside this funcation as it is asynchronous.
-  // 'calledData' must be passed to the varible 'appid' first.
-  appid = calledData;
-  
-  // Warning: This will make you API key visible!
-  //console.log('Called AJAX Data:' + ' ' + calledData); // Logs 'calledData' to the Console. DO NOT USE ON LIVE VERSION!
-  //console.log('App ID Varible:' + ' ' + appid); // Logs the App ID to the Console. DO NOT USE ON LIVE VERSION!
-
-  if (appid == "NotSet") {
-    // Console warning if the 'appid' is set to "NotSet".
-    console.log('WARNING!: The varible' + ' ' + '"appid"' + ' ' + 'is not set to an API key!');
-
-    // Call the 'getLocation' function only after it has been confiremed that 'appid' has a set value.
-    getLocation();
-} else {
-    // Console conformation that the variable 'appid is set to an API key.
-    console.log('SUCCESS: The varible' + ' ' + '"appid"' + ' ' + 'is set to an API key!');
-
-    // Call the 'getLocation' function only after it has been confiremed that 'appid' has a set value.
-    getLocation();}
-});
-//-------------------------
+let weatherdata;
 
 // Get the geolocation from the BOM.
 function getLocation() {
@@ -90,87 +45,57 @@ function getLocation() {
 
 // Set the weather value for the game.
 async function showPosition(position) {
+  try {
+    const res = await fetch('https://js-adventure.stagingurl.dev/includes/php/api-proxy.php?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude);
+    const data = await res.json();
 
-  // If the OpenWeather API Key is not set a random weather condition will be set.
-  if (appid == "NotSet" ) {
-    randomweatherstates = ["Clouds","Rain","Clear","Snow","Extreme","Okay"];
-    random = Math.floor((Math.random() * randomweatherstates.length));
-    // Saves the weather data to local storage.
-    localStorage.setItem('weatherdata', randomweatherstates[random]);
-    randomweather = (localStorage.getItem('weatherdata'));
+    if (data && data.weather && data.weather.length > 0) {
+      // Use the real API weather data.
+      const condition = data.weather[0].main;
+      localStorage.setItem('weatherdata', condition);
+      setweather = condition;
 
-    // This if statement takes the data in randomweather and matches it to an alternative word. The alternative word is added to the variable gameweather, adding randomweather to a scenario text string to display the weather.
-    if (randomweather == "Clouds")
-      {
-      gameweather = "cloudy"
+      switch (setweather) {
+        case "Clouds": gameweather = "cloudy"; break;
+        case "Sun": gameweather = "sunny"; break;
+        case "Rain": gameweather = "raining"; break;
+        case "Clear": gameweather = "clear"; break;
+        case "Snow": gameweather = "snowy"; break;
+        case "Extreme": gameweather = "extremely dangerous"; break;
+        default: gameweather = "okay";
       }
-      else if (randomweather == "Sun")
-      {
-        gameweather = "sunny"
-      }
-      else if (randomweather == "Rain")
-      {
-        gameweather = "raining"
-      }
-      else if (randomweather == "Clear")
-      {
-        gameweather = "clear"
-      }
-      else if (randomweather == "Snow")
-      {
-        gameweather = "snowy"
-      }
-      else if (randomweather == "Extreme")
-      {
-        gameweather = "extremly dangerous"
-      }
-      else if (randomweather == "Okay")
-      {
-        gameweather = "okay"
-      }
-      console.log('Random Weather Value:' + ' ' + randomweather);
-      console.log('Random Ingame Weather:' + ' ' + gameweather);
 
-  // Place the Coordinates in the Open Weather Maps API and retrieves the players local weather in JSON format and then fillers it down to the current conditions and saves it to local storage before sending it to a varible.
-  } else {
-    const res = await fetch('https://api.openweathermap.org/data/2.5/weather?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude + '&appid=' + appid + '')
-    const data = await res.json()
+      console.log('API Weather:', setweather);
+      console.log('In-Game Weather:', gameweather);
 
-    // Saves the weather data to local storage.
-    localStorage.setItem('weatherdata', data.weather[0].main);
-    setweather = (localStorage.getItem('weatherdata'));
-    console.log('API Ingame Weather:' + ' ' + setweather);
+    } else {
+      // Fallback to random weather.
+      useRandomWeather();
+    }
+  } catch (err) {
+    console.error("Weather fetch failed, using random weather instead.", err);
+    useRandomWeather();
+  }
+}
 
-    // This if statement takes the data in setweather and matches it to an alternative word. The alternative word is added to the variable gameweather, adding gameweather to a scenario text string to display the current weather.
-    if (setweather == "Clouds")
-      {
-      gameweather = "cloudy"
-      }
-      else if (setweather == "Sun")
-      {
-        gameweather = "sunny"
-      }
-      else if (setweather == "Rain")
-      {
-        gameweather = "raining"
-      }
-      else if (setweather == "Clear")
-      {
-        gameweather = "clear"
-      }
-      else if (setweather == "Snow")
-      {
-        gameweather = "snowy"
-      }
-      else if (setweather == "Extreme")
-      {
-        gameweather == "extremly dangerous"
-      }
-      else (gameweather = "okay");
+function useRandomWeather() {
+  randomweatherstates = ["Clouds", "Rain", "Clear", "Snow", "Extreme", "Okay"];
+  random = Math.floor((Math.random() * randomweatherstates.length));
+  randomweather = randomweatherstates[random];
+  localStorage.setItem('weatherdata', randomweather);
 
-      console.log('Matched API Weather Value:' + ' ' + setweather);
-      console.log('Matched API Ingame Weather:' + ' ' + gameweather);
- }
+  switch (randomweather) {
+    case "Clouds": gameweather = "cloudy"; break;
+    case "Sun": gameweather = "sunny"; break;
+    case "Rain": gameweather = "raining"; break;
+    case "Clear": gameweather = "clear"; break;
+    case "Snow": gameweather = "snowy"; break;
+    case "Extreme": gameweather = "extremely dangerous"; break;
+    default: gameweather = "okay";
+  }
+
+  console.log('Random Weather:', randomweather);
+  console.log('In-Game Weather:', gameweather);
 }
 
 // Displays an error if geolocation is off or blocked in the browser.
@@ -185,9 +110,9 @@ input.onkeydown = function (event) {
   if (event.key == "Enter" || event.keyCode == 13) {
     // Checks to see of the input field is null.
     if(input.value  === "" || null ) {
-      // Adds the message "I need to know your name first!" to the html id text
-      document.getElementById("text").innerHTML = "I need to know your name first!"; //Adds the 
-      // Resets the input to any empty value redy for the playsers name
+      // Adds the message "I need to know your name first!" to the html id text.
+      document.getElementById("text").innerHTML = "I need to know your name first!";
+      // Resets the input to any empty value redy for the playsers name.
       input.value ="";
     } else {
       // Outputs the Player Name from the BOM local storage.
@@ -201,48 +126,48 @@ input.onkeydown = function (event) {
   }
 }
 
-// Runs the in game clock based on the current system time eg. hh:mm:ss AM/PM
+// Runs the in game clock based on the current system time eg. hh:mm:ss AM/PM.
 function showTime() {
   // Gets the time values
-  var date = new Date();
-  var vSec = String(date.getSeconds()).padStart(2, '0');
-  var vMin = String(date.getMinutes()).padStart(2, '0');
-  var v24hou = String(date.getHours()).padStart(2, '0');
-  var vNoString24hou = date.getHours()
-  var v12hou = (v24hou % 12) || 12;
+  let date = new Date();
+  let vSec = String(date.getSeconds()).padStart(2, '0');
+  let vMin = String(date.getMinutes()).padStart(2, '0');
+  let v24hou = String(date.getHours()).padStart(2, '0');
+  let vNoString24hou = date.getHours()
+  let v12hou = (v24hou % 12) || 12;
 
-  // Builds the 24 hour Clock in the UTC Time Zone
-  var v24HourClock = v24hou + ":" + vMin + ":" + vSec;
+  // Builds the 24 hour Clock in the UTC Time Zone.
+  let v24HourClock = v24hou + ":" + vMin + ":" + vSec;
 
-  // AM or PM Check
+  // AM or PM Check.
   if (vNoString24hou >= 12) { var vAMPM = "PM"; } else { var vAMPM = "AM"; }
 
-  // Builds the 12 hour clock
+  // Builds the 12 hour clock.
   v12HourClock = v12hou + ":" + vMin + ":" + vSec + " " + vAMPM;
   setTimeout(showTime, 1000);
 }
 showTime()
 
 // Replaces the phrase 'Your Name' with the players name where ever it is used.
-var changeText = function (words) {
+let changeText = function (words) {
   text.innerHTML = words.replace("Your Name", player);
 };
 
 // This takes the image link and puts it in the proper format and sends it to the html page.
-var changeImage = function (img) {
+let changeImage = function (img) {
   images.setAttribute('src', img);
 };
 
 // This looks at the number of options we have set and creates enough buttons.
 function changeButtons(buttonList) {
   buttonBox.innerHTML = "";
-  for (var i = 0; i < buttonList.length; i++) {
-    buttonBox.innerHTML += `<button class="btn btn-secondary h-100" onClick="${buttonList[i][1]}">${buttonList[i][0]}</button>`;
+  for (let i = 0; i < buttonList.length; i++) {
+    buttonBox.innerHTML += `<button class="btn btn-secondary" onClick="${buttonList[i][1]}">${buttonList[i][0]}</button>`;
   };
 };
 
 // This is what moves the game along.
-var advanceTo = function (s) {
+let advanceTo = function (s) {
   changeImage(s.image)
   changeText(s.text)
   if (s.buttons) {
@@ -275,7 +200,7 @@ function setScenarioText() {
     five: {
       image: "https://images.unsplash.com/photo-1518504361720-82ccdc540022?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       text: "A wild gang of rabid dogs chase you away from the campervan. Against your better judgement, you enter a creepy house for safety.",
-      buttons: [["Continue", "advanceTo(scenario.eight)"]]
+      buttons: [["continue", "advanceTo(scenario.eight)"]]
     },
     six: {
       image: "https://images.unsplash.com/photo-1678962855748-d012ea7a2f10?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -314,7 +239,9 @@ function setScenarioText() {
     },
   })
 }
-var scenario = setScenarioText()
-
 // This call starts the scenerio.
-advanceTo(scenario.one);
+window.onload = async function () {
+  await getLocation(); // Waits for weather to be set.
+  scenario = setScenarioText();
+  advanceTo(scenario.one); // Start the game from the beginning.
+};

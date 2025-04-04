@@ -1,4 +1,4 @@
 <?php
-  //$OWMAPIkey Cannot be null! It must be a API Key or the value "NotSet".
-  $OWMAPIkey ="NotSet";
+  //API Key.
+  $OWMAPIkey ='ltk1xznj42u6twetn49ycmbjqjpscdyc'; //This is not a real API Key!
 ?>
