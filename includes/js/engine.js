@@ -1,8 +1,8 @@
-//The is the game engine.
-//Please Note: You will need an API key from OpenWeather, https://openweathermap.org/api, for JS Adventure to work correctly.
+// This is the game engine.
+// Please Note: You will need an API key from OpenWeather, https://openweathermap.org/api, for JS Adventure to work correctly.
 
 //--- Gloabal Varibles ---
-//These variables connect our code with the 'id' on the html page.
+// These variables connect our code with the 'id' on the html page.
 let images = document.getElementById("images")
 let buttonBox = document.getElementById('buttonBox');
 let input = document.getElementById('input');
@@ -10,28 +10,28 @@ let input = document.getElementById('input');
 // This variable contains the scenario data.
 let scenario;
 
-//This is the variable for the name of the character.
+// This is the variable for the name of the character.
 let player;
 
-//Varible for Random Weather States.
+// Varible for Random Weather States.
 let randomweatherstates;
 
-//Holds a Random Varible.
+// Holds a Random Varible.
 let random;
 
-//Varible for the random weather state.
+// Varible for the random weather state.
 let randomweather;
 
-//Holds the local weather condition.
+// Holds the local weather condition.
 let setweather;
 
-//Holds the alternative word fir the local weather condition.
+// Holds the alternative word fir the local weather condition.
 let gameweather;
 
-//Holds the time from the twelve hour clock function.
+// Holds the time from the twelve hour clock function.
 let v12HourClock;
 
-//Holds the weather data.
+// Holds the weather data.
 let weatherdata;
 
 // Get the geolocation from the BOM.
@@ -105,7 +105,7 @@ function showError(error) {
   }
 }
 
-//Gets the players name from the input field when the enter key is pressed.
+// Gets the players name from the input field when the enter key is pressed.
 input.onkeydown = function (event) {
   if (event.key == "Enter" || event.keyCode == 13) {
     // Checks to see of the input field is null.
